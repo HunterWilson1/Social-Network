@@ -1,10 +1,4 @@
-const { ObjectId } = require("mongoose").Types;
 const { User, Thought } = require("../models/index");
-
-const userC = async () =>
-  User.aggregate()
-    .count("userCount")
-    .then((numberOfUsers) => numberOfUsers);
 
 module.exports = {
   //get all
@@ -83,28 +77,28 @@ module.exports = {
   addFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $addToSet: { friends: req.body }},
-      { runValidators: true, new: true}
+      { $addToSet: { friends: req.body } },
+      { runValidators: true, new: true }
     )
-    .then((user) =>
-      !user
-      ? res.status(404).json({ message: 'No user with that id'})
-      : res.json(user)
-    )
-    .catch((err) => res.status(500).json(err));
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: "No user with that id" })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
   },
   //remove friend
   removeFriend(req, res) {
     User.findOneAndUpdate(
-      { _id: req.params.userId},
-      { $pull: { friends: req.params.friendId}},
-      { runValidators: true, new: true}
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
     )
-    .then((user) =>
-      !user
-      ? res.status(404).json({ message: 'No user with that id'})
-      : res.json(user)
-    )
-    .catch((err) => res.status(500).json(err))
-  }
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: "No user with that id" })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };
