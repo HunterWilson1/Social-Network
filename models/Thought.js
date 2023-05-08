@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+const{reactionSchema} = require('./Reaction')
+const{userSchema} = require('./User')
 
 const thoughtSchema = new Schema(
     {
@@ -12,6 +14,7 @@ const thoughtSchema = new Schema(
             type: Date,
             default: Date.now,
             //add getter method here
+    
         },
         username: {
             type: String,
