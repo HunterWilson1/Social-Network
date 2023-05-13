@@ -1,6 +1,11 @@
 const { User, Thought } = require("../models/index");
 
-module.exports = {
+const userCount = async () =>
+  User.aggregate()
+    .count("userCount")
+    .then((numberOfUsers) => numberOfUsers);
+
+    module.exports = {
   //get all
   getAllUsers(req, res) {
     User.find()
