@@ -48,15 +48,13 @@ const userCount = async () =>
       { _id: req.params.userId },
       { $set: req.body },
       { runValidators: true, new: true }
-    ).then((user) =>
-      !user
-        ? res.status(404).json({ message: "No User with that ID" })
-        : res
-            .json({
-              user,
-            })
-            .catch((err) => res.status(500).json(err))
-    );
+    ).then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: "No User with that ID" });
+      }
+      return res.json({ user });
+    })
+    .catch((err) => res.status(500).json(err));
   },
   //delete a user
   deleteUser(req, res) {
